@@ -1,0 +1,529 @@
+
+<!DOCTYPE html>
+
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loan Shark Lite - Advanced UI</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #1f4037, #99f2c8);
+      min-height: 100vh;
+      color: #2c3e50;
+      padding: 2rem 1rem;
+    }
+
+
+.container {
+  max-width: 1000px;
+}
+
+h1,
+h4 {
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.summary-cards {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.summary-card {
+  flex: 1;
+  background: rgba(255 255 255 / 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  padding: 1rem 1.5rem;
+  color: #e9f1f7;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+.summary-card:hover {
+  background: rgba(255 255 255 / 0.25);
+}
+.summary-card h5 {
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.03em;
+}
+.summary-card p {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: #dff6fd;
+  margin: 0;
+}
+
+.card {
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: #ffffffdd;
+}
+
+.btn {
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: #16a085;
+  border: none;
+  box-shadow: 0 4px 15px rgba(22, 160, 133, 0.5);
+}
+.btn-primary:hover {
+  background: #13856b;
+  box-shadow: 0 6px 20px rgba(19, 133, 107, 0.7);
+}
+.btn-secondary {
+  background: #2980b9;
+  border: none;
+  box-shadow: 0 4px 15px rgba(41, 128, 185, 0.5);
+}
+.btn-secondary:hover {
+  background: #1c5d8a;
+  box-shadow: 0 6px 20px rgba(28, 93, 138, 0.7);
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+thead th {
+  background: #16a085;
+  color: #fff;
+  border-radius: 0.8rem;
+  padding: 12px 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+tbody tr {
+  background: #f8f9fa;
+  border-radius: 0.8rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s ease;
+}
+
+tbody tr:hover {
+  background: #e0f7f1;
+}
+
+tbody td {
+  padding: 12px 15px;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #34495e;
+}
+
+.badge-paid {
+  background-color: #2ecc71;
+  color: white;
+  padding: 0.25em 0.5em;
+  border-radius: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge-pending {
+  background-color: #e67e22;
+  color: white;
+  padding: 0.25em 0.5em;
+  border-radius: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge-overdue {
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.25em 0.5em;
+  border-radius: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+input[type="number"].form-control-sm {
+  max-width: 90px;
+  margin: auto;
+  border-radius: 0.5rem;
+  transition: box-shadow 0.3s ease;
+}
+input[type="number"].form-control-sm:focus {
+  box-shadow: 0 0 8px #16a085;
+  border-color: #16a085;
+}
+
+.modal-content {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.modal-header {
+  background: #16a085;
+  color: #fff;
+  font-weight: 600;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+}
+
+.form-error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+@media (max-width: 575px) {
+  .summary-cards {
+    flex-direction: column;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Loan Shark Lite</h1>
+
+
+<div class="summary-cards mb-4">
+  <div class="summary-card">
+    <h5 id="totalBorrowers">0</h5>
+    <p>Total Borrowers</p>
+  </div>
+  <div class="summary-card">
+    <h5 id="totalLoans">0</h5>
+    <p>Active Loans</p>
+  </div>
+  <div class="summary-card">
+    <h5 id="totalOutstanding">R 0.00</h5>
+    <p>Total Outstanding</p>
+  </div>
+</div>
+
+<div class="card p-3">
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h4 class="mb-0">Loan Dashboard</h4>
+    <div>
+      <button
+        class="btn btn-secondary btn-sm me-2"
+        data-bs-toggle="modal"
+        data-bs-target="#addBorrowerModal"
+      >
+        + Add Borrower
+      </button>
+      <button
+        class="btn btn-primary btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#createLoanModal"
+      >
+        + Create Loan
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>Borrower</th>
+          <th>Amount</th>
+          <th>Interest</th>
+          <th>Total Due</th>
+          <th>Due Date</th>
+          <th>Paid</th>
+          <th>Outstanding</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="loanTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Add Borrower Modal -->
+
+  <div
+    class="modal fade"
+    id="addBorrowerModal"
+    tabindex="-1"
+    aria-labelledby="addBorrowerModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Borrower</h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <input
+            type="text"
+            id="borrowerName"
+            class="form-control mb-2"
+            placeholder="Borrower Full Name"
+          />
+          <div id="borrowerError" class="form-error"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary w-100" onclick="submitBorrower()">
+            Save Borrower
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Loan Modal -->
+
+  <div
+    class="modal fade"
+    id="createLoanModal"
+    tabindex="-1"
+    aria-labelledby="createLoanModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Loan</h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <select id="borrowerSelect" class="form-select mb-2">
+            <option value="">Select Borrower</option>
+          </select>
+          <input
+            type="number"
+            id="amountInput"
+            class="form-control mb-2"
+            placeholder="Loan Amount"
+            min="1"
+          />
+          <input
+            type="number"
+            id="interestInput"
+            class="form-control mb-2"
+            placeholder="Interest %"
+            min="0"
+            step="0.01"
+          />
+          <input type="date" id="dueDateInput" class="form-control mb-2" />
+          <div id="loanError" class="form-error"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary w-100" onclick="createLoan()">
+            Save Loan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+  <script>
+    let borrowers = [];
+    let loans = [];
+  
+    function updateSummary() {
+      document.getElementById("totalBorrowers").textContent = borrowers.length;
+      document.getElementById("totalLoans").textContent = loans.length;
+  
+      const totalOutstanding = loans.reduce((acc, loan) => acc + loan.outstanding, 0);
+      document.getElementById("totalOutstanding").textContent =
+        "R " + totalOutstanding.toFixed(2);
+    }
+  
+    function submitBorrower() {
+      const nameInput = document.getElementById("borrowerName");
+      const errorDiv = document.getElementById("borrowerError");
+      const name = nameInput.value.trim();
+  
+      if (!name) {
+        errorDiv.textContent = "Name is required.";
+        return;
+      }
+  
+      borrowers.push(name);
+      nameInput.value = "";
+      errorDiv.textContent = "";
+  
+      const select = document.getElementById("borrowerSelect");
+      const option = document.createElement("option");
+      option.value = name;
+      option.textContent = name;
+      select.appendChild(option);
+  
+      const modal = bootstrap.Modal.getInstance(
+        document.getElementById("addBorrowerModal")
+      );
+      modal.hide();
+  
+      updateSummary();
+    }
+  
+    function createLoan() {
+      const borrower = document.getElementById("borrowerSelect").value;
+      const amount = parseFloat(document.getElementById("amountInput").value);
+      const interest = parseFloat(document.getElementById("interestInput").value);
+      const dueDate = document.getElementById("dueDateInput").value;
+  
+      if (!borrower || isNaN(amount) || isNaN(interest) || !dueDate) {
+        alert("All fields are required");
+        return;
+      }
+  
+      const totalDue = amount + (amount * interest) / 100;
+  
+      const loan = {
+        id: Date.now(),
+        borrower,
+        amount,
+        interest,
+        totalDue,
+        dueDate,
+        paid: 0,
+        outstanding: totalDue,
+        status: "Pending",
+      };
+  
+      loans.push(loan);
+      addLoanToTable(loan);
+  
+      document.getElementById("amountInput").value = "";
+      document.getElementById("interestInput").value = "";
+      document.getElementById("dueDateInput").value = "";
+      document.getElementById("borrowerSelect").value = "";
+  
+      const modal = bootstrap.Modal.getInstance(
+        document.getElementById("createLoanModal")
+      );
+      modal.hide();
+  
+      updateSummary();
+    }
+  
+    function addLoanToTable(loan) {
+      const tbody = document.getElementById("loanTableBody");
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${loan.borrower}</td>
+        <td>R ${loan.amount.toFixed(2)}</td>
+        <td>${loan.interest}%</td>
+        <td>R ${loan.totalDue.toFixed(2)}</td>
+        <td>${loan.dueDate}</td>
+        <td>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            value="${loan.paid}"
+            min="0"
+            max="${loan.totalDue}"
+            onchange="updatePaid(${loan.id}, this.value)"
+          />
+        </td>
+        <td id="outstanding-${loan.id}">R ${loan.outstanding.toFixed(2)}</td>
+        <td id="status-${loan.id}">
+          <span class="badge badge-${getStatusClass(loan.status)}">${loan.status}</span>
+        </td>
+        <td>
+          <button class="btn btn-danger btn-sm" onclick="deleteLoan(${loan.id})">Delete</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+  
+    function getStatusClass(status) {
+      if (status === "Paid") return "paid";
+      if (status === "Overdue") return "overdue";
+      return "pending";
+    }
+  
+    function updatePaid(id, value) {
+      const loan = loans.find((l) => l.id === id);
+      const paid = parseFloat(value);
+  
+      if (isNaN(paid) || paid < 0 || paid > loan.totalDue) return;
+  
+      loan.paid = paid;
+      loan.outstanding = loan.totalDue - paid;
+  
+      const today = new Date().toISOString().split("T")[0];
+      if (loan.outstanding <= 0) {
+        loan.status = "Paid";
+      } else if (loan.dueDate < today) {
+        loan.status = "Overdue";
+      } else {
+        loan.status = "Pending";
+      }
+  
+      document.getElementById(`outstanding-${loan.id}`).textContent =
+        "R " + loan.outstanding.toFixed(2);
+  
+      const statusEl = document.getElementById(`status-${loan.id}`);
+      statusEl.innerHTML = `<span class="badge badge-${getStatusClass(
+        loan.status
+      )}">${loan.status}</span>`;
+  
+      updateSummary();
+    }
+  
+    function deleteLoan(id) {
+      loans = loans.filter((l) => l.id !== id);
+      const tbody = document.getElementById("loanTableBody");
+      tbody.innerHTML = "";
+      loans.forEach((loan) => addLoanToTable(loan));
+      updateSummary();
+    }
+  
+    // Ensure modals work
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof bootstrap === "undefined") {
+        console.error("Bootstrap is required for modal functionality.");
+      }
+    });
+  </script>
+
+  </body>
+  </html>
